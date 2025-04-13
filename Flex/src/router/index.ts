@@ -83,8 +83,9 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   const authStore = useAuthStore();
+  authStore; // Prevent unused variable warning
 
   // Set page title
   document.title = `${to.meta.title} | Flex Gym Management`;
@@ -103,7 +104,7 @@ router.beforeEach(async (to, from, next) => {
 
     // Check doctype permissions if specified
     if (to.meta.doctype && to.meta.permissions) {
-      const hasPermission = await checkPermissions(to.meta.doctype, to.meta.permissions);
+      const hasPermission = await checkPermissions(to.meta.doctype as string, to.meta.permissions as string[]);
       if (!hasPermission) {
         next({ name: 'dashboard' });
         return;

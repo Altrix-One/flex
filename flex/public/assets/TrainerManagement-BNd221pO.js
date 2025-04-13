@@ -1,0 +1,1 @@
+import{d as n,a as t,b as e,j as r}from"./index-jmRsHrpU.js";const s={class:"p-6"},m=n({__name:"TrainerManagement",setup(o){return(l,a)=>(r(),t("div",s,a[0]||(a[0]=[e("h1",{class:"text-2xl font-bold mb-4"},"Trainer Management",-1),e("div",{class:"bg-white rounded-lg shadow p-6"},[e("p",null,"Trainer management interface will be implemented here")],-1)])))}});export{m as default};

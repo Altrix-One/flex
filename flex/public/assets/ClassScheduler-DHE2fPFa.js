@@ -1,0 +1,1 @@
+import{d as l,a as t,b as e,j as a}from"./index-jmRsHrpU.js";const n={class:"p-6"},c=l({__name:"ClassScheduler",setup(o){return(d,s)=>(a(),t("div",n,s[0]||(s[0]=[e("h1",{class:"text-2xl font-bold mb-4"},"Class Scheduler",-1),e("div",{class:"bg-white rounded-lg shadow p-6"},[e("p",null,"Class scheduling interface will be implemented here")],-1)])))}});export{c as default};

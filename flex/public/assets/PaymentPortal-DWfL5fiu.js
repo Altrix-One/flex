@@ -1,0 +1,1 @@
+import{d as a,a as n,b as t,j as o}from"./index-jmRsHrpU.js";const s={class:"p-4"},p=a({__name:"PaymentPortal",setup(l){return(m,e)=>(o(),n("div",s,e[0]||(e[0]=[t("h1",{class:"text-2xl font-bold mb-4"},"Payment Portal",-1),t("p",null,"Payment management interface will be implemented here.",-1)])))}});export{p as default};

@@ -96,8 +96,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStorage } from '@vueuse/core';
 import {
   UserGroupIcon,
   CalendarIcon,
@@ -110,7 +111,6 @@ import {
   CreditCardIcon,
   DocumentChartBarIcon
 } from '@heroicons/vue/24/outline';
-import { useStorage } from '@vueuse/core';
 
 // Theme
 const isDark = useStorage('isDark', false);

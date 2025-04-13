@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useVirtualList, useDebounceFn } from '@vueuse/core';
 
 interface Member {
@@ -18,13 +18,21 @@ const selectedMembers = ref<Set<string>>(new Set());
 
 // Virtual list setup for performance
 const { list, containerProps, wrapperProps } = useVirtualList(
-  computed(() => filterMembers()),
+  members,
   {
     itemHeight: 64,
   }
 );
 
-// Debounced search using useDebounceFn instead of debounce
+// Filter members based on search query
+const filteredMembers = computed(() => {
+  return members.value.filter(member =>
+    member.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    member.email.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+});
+
+// Debounced search
 const debouncedSearch = useDebounceFn(async (query: string) => {
   try {
     const apiUrl = import.meta.env.VITE_API_URL || '';
@@ -35,14 +43,6 @@ const debouncedSearch = useDebounceFn(async (query: string) => {
     console.error('Error searching members:', error);
   }
 }, 300);
-
-// Filter members based on search query
-const filterMembers = () => {
-  return members.value.filter(member =>
-    member.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-    member.email.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-};
 
 // Bulk actions
 const handleBulkAction = async (action: string) => {
@@ -91,10 +91,13 @@ const fetchMembers = async () => {
   }
 };
 
-fetchMembers();
+onMounted(() => {
+  fetchMembers();
+});
 </script>
 
 <template>
+  <!-- Template remains the same as before -->
   <div class="space-y-6">
     <!-- Header -->
     <div class="flex items-center justify-between">
@@ -154,7 +157,7 @@ fetchMembers();
       <div v-if="viewMode === 'list'" v-bind="containerProps" class="overflow-auto max-h-[600px]">
         <div v-bind="wrapperProps">
           <div
-            v-for="member in list"
+            v-for="{ data: member } in list"
             :key="member.id"
             class="flex items-center p-4 border-b border-gray-200 hover:bg-gray-50"
           >
@@ -189,7 +192,7 @@ fetchMembers();
 
       <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
         <div
-          v-for="member in filterMembers()"
+          v-for="member in filteredMembers"
           :key="member.id"
           class="bg-gray-50 rounded-lg p-4"
         >
